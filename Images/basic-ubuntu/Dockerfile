@@ -12,22 +12,18 @@ RUN apt install -y software-properties-common \
 
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 
-RUN apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ bionic main restricted" 								\
-&& apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted" 						\
-&& apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ bionic universe"										\
-&& apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe"								\
-&& apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ bionic multiverse"										\
-&& apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ bionic-updates multiverse"								\
-&& apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse"	\
-&& apt-add-repository "deb http://security.ubuntu.com/ubuntu/ bionic-security main restricted"						\
-&& apt-add-repository "deb http://security.ubuntu.com/ubuntu/ bionic-security universe"								\
-&& apt-add-repository "deb http://security.ubuntu.com/ubuntu/ bionic-security multiverse"							\
-&& apt-add-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-6.0 main"								\
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
+
+RUN apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ bionic main restricted" 			\
+&& apt-add-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-6.0 main"	        \
 && apt-get update
 
-RUN apt install -y --allow-unauthenticated gcc-7 clang-6.0 lld-6.0 lldb-6.0 vim
+RUN apt-get install -y --allow-unauthenticated gcc-7 clang-6.0 lld-6.0 lldb-6.0 vim
 
-RUN ln -s /usr/bin/clang-6.0 /usr/bin/clang && ln -s /usr/bin/lld-6.0 /usr/bin/lld && ln -s /usr/bin/lldb-6.0 /usr/bin/lldb
+RUN ln -s /usr/bin/clang-6.0 /usr/bin/clang 	\
+&& ln -s /usr/bin/clang++-6.0 /usr/bin/clang++	\
+&& ln -s /usr/bin/lld-6.0 /usr/bin/lld 			\
+&& ln -s /usr/bin/lldb-6.0 /usr/bin/lldb
 
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
